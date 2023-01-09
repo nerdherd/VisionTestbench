@@ -36,9 +36,14 @@ public class RobotContainer {
   }
 
   public void configurePeriodic() {
-    SmartDashboard.putNumber("Yaw", limeLight.getTarget().getYaw());
-    SmartDashboard.putNumber("Pitch", limeLight.getTarget().getPitch());
-    SmartDashboard.putNumber("ID", limeLight.getTarget().getFiducialId());
+    SmartDashboard.putBoolean("HasTargets", limeLight.photonCamera.getLatestResult().hasTargets());
+
+    if (limeLight.photonCamera.getLatestResult().hasTargets()) {
+      SmartDashboard.putNumber("Yaw", limeLight.getTarget().getYaw());
+      SmartDashboard.putNumber("Pitch", limeLight.getTarget().getPitch());
+      SmartDashboard.putNumber("ID", limeLight.getTarget().getFiducialId());
+    }
+
   }
 
   /**
