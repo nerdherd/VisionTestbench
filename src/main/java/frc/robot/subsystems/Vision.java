@@ -10,6 +10,8 @@ public class Vision extends SubsystemBase{
     private PhotonCamera photonCamera; // protect proton camera
     private PhotonTrackedTarget photonTrackedTarget;
 
+    public boolean limelightHasTargets;
+
     public Vision(){
         photonCamera = new PhotonCamera("687Limelight1");
     }
@@ -17,8 +19,9 @@ public class Vision extends SubsystemBase{
     @Override
     public void periodic() {
         var result = photonCamera.getLatestResult();
+        limelightHasTargets = result.hasTargets();
         
-        if (result.hasTargets()) { // Check to result.hasTargets() cannot be in a separate variable, it must be checked directly.
+        if (limelightHasTargets) { 
             photonTrackedTarget = result.getBestTarget();
             logToSmartDashboard();
         } 
