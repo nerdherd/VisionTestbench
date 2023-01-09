@@ -20,8 +20,8 @@ public class Vision extends SubsystemBase{
         
         if (result.hasTargets()) { // Check to result.hasTargets() cannot be in a separate variable, it must be checked directly.
             photonTrackedTarget = result.getBestTarget();
+            logToSmartDashboard();
         } 
-        logToSmartDashboard();
     }
 
     public double getPitch() {
