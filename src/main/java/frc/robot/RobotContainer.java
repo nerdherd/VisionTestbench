@@ -35,17 +35,6 @@ public class RobotContainer {
     configureBindings();
   }
 
-  public void configurePeriodic() {
-    SmartDashboard.putBoolean("HasTargets", limeLight.photonCamera.getLatestResult().hasTargets());
-
-    if (limeLight.photonCamera.getLatestResult().hasTargets()) {
-      SmartDashboard.putNumber("Yaw", limeLight.getTarget().getYaw());
-      SmartDashboard.putNumber("Pitch", limeLight.getTarget().getPitch());
-      SmartDashboard.putNumber("ID", limeLight.getTarget().getFiducialId());
-    }
-
-  }
-
   /**
    * Use this method to define your trigger->command mappings. Triggers can be created via the
    * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary
