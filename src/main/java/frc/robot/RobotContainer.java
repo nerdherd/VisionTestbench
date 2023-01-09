@@ -30,6 +30,8 @@ public class RobotContainer {
 
   private Vision limeLight = new Vision();
   private Drivetrain driveTrain = new Drivetrain(limeLight);
+  private RunCommand arcadeRunCommand = new RunCommand(() -> driveTrain.arcadeDrive(m_driverController.getLeftY(), m_driverController.getRightX()), driveTrain);
+  private RunCommand visionRunCommand = new RunCommand(() -> driveTrain.arcadeDrive(m_driverController.getLeftY(), driveTrain.getApriltagRotation()), driveTrain);
   // Replace with CommandPS4Controller or CommandJoystick if needed
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -54,8 +56,8 @@ public class RobotContainer {
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-    m_driverController.square().whileTrue(new RunCommand(() -> driveTrain.arcadeDrive(m_driverController.getLeftY(), m_driverController.getRightX()), driveTrain));
-    m_driverController.circle().whileTrue(new RunCommand(() -> driveTrain.arcadeDrive(m_driverController.getLeftY(), driveTrain.getApriltagRotation()), driveTrain));
+    m_driverController.square().whileTrue(arcadeRunCommand);
+    m_driverController.circle().whileTrue(visionRunCommand);
   }
 
   /**
