@@ -10,7 +10,9 @@ import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Vision;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -56,8 +58,8 @@ public class RobotContainer {
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-    m_driverController.square().whileTrue(arcadeRunCommand);
-    m_driverController.circle().whileTrue(visionRunCommand);
+    m_driverController.square().onTrue(new InstantCommand(() -> switchToManual()));
+    m_driverController.circle().whileTrue(new InstantCommand(() -> switchToVision()));
   }
 
   /**
@@ -68,5 +70,17 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
     return Autos.exampleAuto(m_exampleSubsystem);
+  }
+
+  private void switchToVision() {
+    SmartDashboard.putBoolean("Vision Mode", true);
+    visionRunCommand.schedule();
+    arcadeRunCommand.cancel();
+  }
+
+  private void switchToManual() {
+    SmartDashboard.putBoolean("Vision Mode", false);
+    visionRunCommand.cancel();
+    arcadeRunCommand.schedule();
   }
 }
